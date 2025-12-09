@@ -122,6 +122,8 @@ async function generateChat(convName) {
     resp = await fetch(API_URL);
     convs = await resp.json();
     let chatFound = false;
+
+    globalConvName = convName;
     convList.forEach(element => {
         if (convName === element.name) {
             document.querySelector("#chat-name").textContent = element.name;
