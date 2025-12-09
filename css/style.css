@@ -1,0 +1,104 @@
+/* Layout */
+html,
+body {
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    background: #f5f7fb;
+}
+
+.bi::before,
+[class^="bi-"]::before,
+[class*=" bi-"]::before {
+    display: inline-block;
+    font-family: bootstrap-icons !important;
+    font-style: normal;
+    font-weight: normal !important;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    vertical-align: -.125em;
+}
+
+.bi-pencil::before {
+    content: "✎";
+}
+
+.chat-app {
+    height: 100vh;
+}
+
+.sidebar {
+    border-right: 1px solid rgba(0, 0, 0, .05);
+    background: #fff;
+
+    overflow-y: auto;
+    height: 100%;
+}
+
+.contact-item {
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.contact-item.active {
+    background: rgba(13, 110, 253, .06);
+}
+
+.messages {
+    background: linear-gradient(180deg, #fff, #f8fbff);
+    padding: 1rem;
+    overflow-y: auto;
+    height: calc(100vh - 180px);
+}
+
+.message {
+    max-width: 50%;
+    padding: 0.6rem 0.9rem;
+    border-radius: 12px;
+    margin-bottom: 0.6rem;
+    display: inline-block;
+
+    overflow-wrap: anywhere;
+}
+
+.message.in {
+    background: #e9f1ff;
+    border-top-left-radius: 4px;
+}
+
+.message.out {
+    background: #dcf8c6;
+    border-top-right-radius: 4px;
+    float: right;
+}
+
+.chat-header {
+    border-bottom: 1px solid rgba(0, 0, 0, .05);
+    background: #fff;
+    padding: .8rem 1rem;
+}
+
+.avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Mobile tweaks */
+@media (max-width: 767.98px) {
+    .sidebar {
+        position: absolute;
+        z-index: 10;
+        inset: 0 60% 0 0;
+        transform: translateX(-100%);
+        transition: transform .25s ease;
+    }
+
+    .sidebar.show {
+        transform: translateX(0);
+    }
+}

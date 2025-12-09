@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <!--
+        Customize this policy to fit your own app's needs. For more guidance, please refer to the docs:
+            https://cordova.apache.org/docs/en/latest/
+        Some notes:
+            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+                * Enable inline JS: add 'unsafe-inline' to default-src
+        -->
+    <!-- Bootstrap 5 CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="css/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Hello World</title>
+</head>
+
+<body>
+
+    <div class="container-fluid chat-app p-0">
+        <div class="row g-0 h-100">
+            <!-- Sidebar: contacts -->
+            <div id="sidebar" class="col-12 col-md-4 col-lg-3 sidebar p-3">
+                <!-- Mon Contact -->
+                <div class="d-flex align-items-center mb-3">
+                    <img src="img/258-2582267_circled-user-male-skin-type-1-2-icon-male-user-icon.png"
+                        alt="me" class="avatar me-2">
+                    <div class="flex-grow-1">
+                        <strong id="currentUser">Mon compte</strong>
+                        <div class="text-muted small">en ligne</div>
+                    </div>
+                    <button id="new-chat-btn" class="btn btn-sm btn-primary ms-2" title="Nouveau message"><i
+                            class="bi bi-pencil"></i></button>
+                </div>
+
+                <div class="mb-3">
+                    <input id="contact-search" class="form-control search-input" placeholder="Rechercher un contact..."
+                        aria-label="Recherche">
+                </div>
+
+                <div id="contacts-list" class="list-group list-group-flush">
+
+                </div>
+
+            </div>
+
+            <!-- Chat area -->
+            <div class="col-12 col-md-8 col-lg-9 d-flex flex-column">
+
+                <div class="chat-header d-flex align-items-center">
+                    <button id="toggle-sidebar" class="btn d-md-none me-2 px-2 py-1 h2" title="Afficher contacts">☰</button>
+                    <img id="chat-avatar" src="img/166258.png" alt="contact"
+                        class="avatar me-2">
+                    <div class="text-truncate">
+                        <strong id="chat-name">Aucun groupe sélectionner</strong>
+                        <div class="text-muted small">en ligne</div>
+                    </div>
+                </div>
+
+                <div id="messages" class="messages d-flex flex-column">
+                    <!-- Sample messages -->
+
+                </div>
+
+                <div class="p-3 bg-white border-top">
+                    <form id="send-form" class="d-flex gap-2 align-items-center">
+                       
+                        <textarea id="message-input" name="messageInput" type="text" class="form-control"
+                            placeholder="Écrire un message..." aria-label="Message"> </textarea>
+                        <button id="send-btn" class="btn btn-primary" type="submit">Envoyer</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/marked.min.js"></script>
+    <script src="app/class/Conv.js"></script>
+    <script src="app/function.js"></script>
+    <script src="app/script.js"></script>
+</body>
+
+</html>
