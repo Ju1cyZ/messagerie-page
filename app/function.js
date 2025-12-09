@@ -22,20 +22,20 @@ async function main() {
     resp = await fetch(API_URL);
     convs = await resp.json();
 
-    convs.conversations.forEach(async element => {
+    for (const element of convs.conversations) {
         let conv = new Conv(element);
         convList.push(conv)
-    });
+    }
 
     //Affiche les convs dans la nav bar
-    convList.forEach((element) => {
+    for (const element of convList) {
         convListDOM.innerHTML += element.generateHTMLSidebarContact();
-    });
+    }
 
     // Ecrit le dernier message
-    convList.forEach(async (e) => {
+    for (const e of convList) {
         document.querySelector(`[data-lastmess-${e.name.split('.')[0]}]`).textContent = await e.getLastMessage();
-    })
+    }
 
     // Mets a jour la navbar toutes les 5 secondes
     setInterval(async () => {
@@ -202,7 +202,7 @@ async function refreshNavBar(resp, convs) {
         let respConv = await fetch(`${API_URL}?conversation=${conv.name}`);
         let messages = await respConv.json();
 
-        if(convSearch !== "" && convContains(messages.messages, convSearch) || convSearch !== "" && conv.name.toLowerCase().includes(convSearch)) {
+        if(convSearch !== "" && (convContains(messages.messages, convSearch) || conv.name.toLowerCase().includes(convSearch))) {
             convList.push(conv)
         } 
         else if(convSearch === ""){
