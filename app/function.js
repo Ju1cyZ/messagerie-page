@@ -45,8 +45,8 @@ async function main() {
 
 
     // Mets a jours les messages toutes les secondes
-    setInterval(() => {
-        generateChat(globalConvName);
+    setInterval(async () => {
+        await generateChat(globalConvName);
     }, 1000);
 }
 
@@ -93,6 +93,7 @@ function createNewChat(e) {
 
     document.querySelector("#messages").innerHTML = "";
     globalConvName = prompt("Entrez le nom de la conversation")
+    document.querySelector("#chat-name").textContent = globalConvName !== "" ? globalConvName : "Aucun groupe sélectionner";
 }
 
 function onSideBarClick(e) {
@@ -117,14 +118,28 @@ function onSearch(e){
  * Permet d'afficher le message d'une conversation dans la zone de text
  * @param {string} convName le nom de la conversation
  */
-function generateChat(convName) {
-    globalConvName = convName;
+async function generateChat(convName) {
+    resp = await fetch(API_URL);
+    convs = await resp.json();
+    let chatFound = false;
     convList.forEach(element => {
         if (convName === element.name) {
             document.querySelector("#chat-name").textContent = element.name;
             element.generateHTMLChat(currentUserConnected);
+            chatFound = true;
         }
     });
+
+    console.log(convName)
+    if(!chatFound && convName !== "") {
+        document.querySelector("#messages").innerHTML = 
+        `<div class="alert alert-success mx-5 mt-3" role="alert">
+                        <h4 class="alert-heading">Création d’une nouvelle conversation - ${escapeHTML(convName)}</h4>
+                        <p>Veuillez entrer votre premier message pour créer la conversation.</p>
+                        <hr>
+                        <p class="mb-0">Votre premier message lancera automatiquement la création de la conversation.</p>
+                    </div>`;
+    }
 }
 
 /**
@@ -186,9 +201,7 @@ async function refreshNavBar(resp, convs) {
         let messages = await respConv.json();
 
         if(convSearch !== "" && convContains(messages.messages, convSearch) || convSearch !== "" && conv.name.toLowerCase().includes(convSearch)) {
-            console.log(convSearch !== "" && convContains(messages.messages, convSearch))
             convList.push(conv)
-            console.log(convList);
         } 
         else if(convSearch === ""){
             convList.push(conv)

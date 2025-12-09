@@ -75,6 +75,10 @@ body {
     float: right;
 }
 
+.message.info {
+    background-color: var(--bs-info);
+}
+
 .chat-header {
     border-bottom: 1px solid rgba(0, 0, 0, .05);
     background: #fff;
