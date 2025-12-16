@@ -46,8 +46,9 @@ async function main() {
 
     // Mets a jours les messages toutes les secondes
     setInterval(async () => {
+        console.log("fetch");
         await generateChat(globalConvName);
-    }, 1000);
+    }, 2000);
 }
 
 /**
@@ -94,6 +95,15 @@ function createNewChat(e) {
     document.querySelector("#messages").innerHTML = "";
     globalConvName = prompt("Entrez le nom de la conversation")
     document.querySelector("#chat-name").textContent = globalConvName !== "" ? globalConvName : "Aucun groupe sélectionner";
+
+
+    document.querySelector("#messages").innerHTML =
+        `<div class="alert alert-success mx-5 mt-3" role="alert">
+                        <h4 class="alert-heading">Création d’une nouvelle conversation - ${escapeHTML(globalConvName)}</h4>
+                        <p>Veuillez entrer votre premier message pour créer la conversation.</p>
+                        <hr>
+                        <p class="mb-0">Votre premier message lancera automatiquement la création de la conversation.</p>
+                    </div>`;
 }
 
 function onSideBarClick(e) {
@@ -107,7 +117,7 @@ function onSideBarClick(e) {
  * La fonction qui est appeler quand l'utilisateur cherche un contact
  * @param {Event} e 
  */
-function onSearch(e){
+function onSearch(e) {
     e.preventDefault();
     convSearch = e.target.value.toLowerCase();
 
@@ -119,29 +129,18 @@ function onSearch(e){
  * @param {string} convName le nom de la conversation
  */
 async function generateChat(convName) {
+    let chatFound = false;
     resp = await fetch(API_URL);
     convs = await resp.json();
-    let chatFound = false;
 
     globalConvName = convName;
     convList.forEach(element => {
         if (convName === element.name) {
+            chatFound = true;
             document.querySelector("#chat-name").textContent = element.name;
             element.generateHTMLChat(currentUserConnected);
-            chatFound = true;
         }
     });
-
-    console.log(convName)
-    if(!chatFound && convName !== "") {
-        document.querySelector("#messages").innerHTML = 
-        `<div class="alert alert-success mx-5 mt-3" role="alert">
-                        <h4 class="alert-heading">Création d’une nouvelle conversation - ${escapeHTML(convName)}</h4>
-                        <p>Veuillez entrer votre premier message pour créer la conversation.</p>
-                        <hr>
-                        <p class="mb-0">Votre premier message lancera automatiquement la création de la conversation.</p>
-                    </div>`;
-    }
 }
 
 /**
@@ -202,10 +201,10 @@ async function refreshNavBar(resp, convs) {
         let respConv = await fetch(`${API_URL}?conversation=${conv.name}`);
         let messages = await respConv.json();
 
-        if(convSearch !== "" && (convContains(messages.messages, convSearch) || conv.name.toLowerCase().includes(convSearch))) {
+        if (convSearch !== "" && (convContains(messages.messages, convSearch) || conv.name.toLowerCase().includes(convSearch))) {
             convList.push(conv)
-        } 
-        else if(convSearch === ""){
+        }
+        else if (convSearch === "") {
             convList.push(conv)
         }
     }
@@ -224,10 +223,10 @@ async function refreshNavBar(resp, convs) {
     })
 }
 
-function convContains(messages, text){
+function convContains(messages, text) {
     for (const element of messages) {
-        if(element.From.toLowerCase().includes(text.toLowerCase()) || element.Content.toLowerCase().includes(text.toLowerCase())) {
-            return true; 
+        if (element.From.toLowerCase().includes(text.toLowerCase()) || element.Content.toLowerCase().includes(text.toLowerCase())) {
+            return true;
         }
     }
     return false;
