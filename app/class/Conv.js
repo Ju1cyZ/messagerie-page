@@ -11,7 +11,6 @@ class Conv {
         let html = "";
         
         let resp = await fetch(`${API_URL}?conversation=${this.name}`);
-        // let resp = await fetch(`${this.name}`);
         this.messages = await resp.json();
 
         this.messages.messages.forEach(message => {
@@ -32,7 +31,6 @@ class Conv {
 
     async getLastMessage(){
         let resp = await fetch(`${API_URL}?conversation=${this.name}`);
-        // let resp = await fetch(`${this.name}`);
         this.messages = await resp.json();
 
         return this.messages.messages[this.messages.messages.length - 1].Content;
@@ -40,7 +38,6 @@ class Conv {
     
     async getLastHour(){
         let resp = await fetch(`${API_URL}?conversation=${this.name}`);
-        // let resp = await fetch(`${this.name}`);
         this.messages = await resp.json();
 
         return this.messages.messages[this.messages.messages.length - 1].SentAt.split("+")[0];
